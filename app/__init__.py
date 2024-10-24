@@ -1,15 +1,20 @@
+import os
+import pickle
 from flask import Flask
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
+current_directory = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/3 REGINA/skripsi/UNTAR.db'
 app.config['SECRET_KEY'] = '9f8b7d6e8a7d4b56a1c9d6b5e4f7d3a2'
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 login_manager = LoginManager()
-login_manager.login_view = 'app_route.login'
+login_manager.login_view = 'auth_route.login'
 login_manager.init_app(app)
 
 from .models import User
@@ -22,8 +27,12 @@ def load_user(user_id):
 # db.init_app(app)
 
 # blueprint for auth routes in our app
-from .routes import app_route as app_route_blueprint
-app.register_blueprint(app_route_blueprint)
+from .routes_app.auth_route import auth_route
+from .routes_app.dashboard_route import dashboard_route
+from .routes_app.kuesioner_route import kuesioner_route
+app.register_blueprint(auth_route)
+app.register_blueprint(dashboard_route)
+app.register_blueprint(kuesioner_route)
 
 # from flask import *
 # from flask_sqlalchemy import SQLAlchemy

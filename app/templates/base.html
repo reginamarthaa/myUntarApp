@@ -15,23 +15,26 @@
             <nav class="navbar navbar-expand-lg navbar-light bs-secondary-gray">
                 <div class="navbar-nav pl-2">
                     <div class="border border-success px-2 m-2 rounded">
-                        <a href="{{ url_for('app_route.dashboard') }}" class="nav-item nav-link">Home</a>
+                        <a href="{{ url_for('dashboard_route.dashboard') }}" class="nav-item nav-link">Home</a>
                     </div>
                     <div class="border border-success px-2 m-2 rounded">
-                        <a href="{{ url_for('app_route.logout') }}" class="nav-item nav-link">Logout</a>
+                        <a href="{{ url_for('auth_route.logout') }}" class="nav-item nav-link">Logout</a>
+                    </div>
+                    <div class="border border-success px-2 m-2 rounded">
+                        <a href="{{ url_for('kuesioner_route.predict') }}" class="nav-item nav-link">Kuesioner</a>
                     </div>
                      
                     <!-- <div class="border border-success px-2 m-2 rounded">
-                        <a href="{{ url_for('app_route.login') }}" class="nav-item nav-link">Login</a>
+                        <a href="{{ url_for('auth_route.login') }}" class="nav-item nav-link">Login</a>
                     </div>
                     <div class="border border-success px-2 m-2 rounded">
-                        <a href="{{ url_for('app_route.signup') }}" class="nav-item nav-link">Sign Up</a>
+                        <a href="{{ url_for('auth_route.signup') }}" class="nav-item nav-link">Sign Up</a>
                     </div> -->
                     
-                    <!-- <a href="{{ url_for('app_route.dashboard') }}" class="nav-item nav-link">Home</a>
-                    <a href="{{ url_for('app_route.login') }}" class="nav-item nav-link">Login</a>
-                    <a href="{{ url_for('app_route.signup') }}" class="nav-item nav-link">Sign Up</a>
-                    <a href="{{ url_for('app_route.logout') }}" class="nav-item nav-link">Logout</a> -->
+                    <!-- <a href="{{ url_for('dashboard_route.dashboard') }}" class="nav-item nav-link">Home</a>
+                    <a href="{{ url_for('auth_route.login') }}" class="nav-item nav-link">Login</a>
+                    <a href="{{ url_for('auth_route.signup') }}" class="nav-item nav-link">Sign Up</a>
+                    <a href="{{ url_for('auth_route.logout') }}" class="nav-item nav-link">Logout</a> -->
                 </div>
             </nav>
         {% endif %}

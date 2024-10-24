@@ -25,4 +25,10 @@ class User(UserMixin, db.Model):
     id = db.Column('USER_ID', db.Integer, primary_key=True)
     email = db.Column('EMAIL', db.String(120), unique=True, nullable=False)
     password = db.Column('PASSWORD', db.String(120), nullable=False)
+
+class Prodi(db.Model):
+    __tablename__ = 'PRODI'
+    id = db.Column('PRODI_ID', db.String(10), primary_key=True)
+    nama_prodi = db.Column('NAMA_PRODI', db.String(120), unique=True, nullable=False)
+    nama_fakultas = db.Column('NAMA_FAKULTAS', db.String(120), nullable=False)
     

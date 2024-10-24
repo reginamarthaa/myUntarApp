@@ -24,7 +24,10 @@
                 <input type="checkbox" class="form-check-input" name="remember">
                 <label class="form-check-label">Ingat Saya</label>
             </div>
-            
+            <div class="form-group my-2">
+                <label>Belum punya akun?</label>
+                <a href="{{ url_for('auth_route.signup') }}">Daftar disini</a>
+            </div>
             <button class="btn btn-info btn-lg btn-block">Masuk</button>
         </form>
     </div>

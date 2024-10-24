@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>TEST COY</h1>
+    <form action="/predict" method="post">
+        <input type="text" name="x1" placeholder="x1" required="required" />
+        <input type="text" name="x2" placeholder="x2" required="required" />
+        <input type="text" name="x3" placeholder="x3" required="required" />
+        <input type="text" name="x4" placeholder="x4" required="required" />
+        <input type="text" name="x5" placeholder="x5" required="required" />
+        <button type="submit">Predict</button>
+    </form>
+   <br>
+   {{ prediction_text }}
+{% endblock %}
