@@ -41,7 +41,7 @@ def predict_post():
 @kuesioner_route.route('/prodi', methods=['POST'])
 def get_prodi():
     fakultas = request.form['fakultas']
-    prodii = kue_svc.getProdi(fakultas)
+    prodii = kue_svc.getProdibyFakultas(fakultas)
     return json.dumps(prodii)
 
 @kuesioner_route.route('/_update_dropdown')

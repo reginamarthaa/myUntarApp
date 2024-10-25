@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form action="/predict_input" method="post">
+<div class="container">
+    <form action="/predict_input" method="post" class="pt-4">
         <!-- nama -->
         <div class="row mb-3">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="exampleInput" class="form-label">Nama Lengkap</label>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-5">
                 <input type="text" class="form-control" id="nama" namplaceholder="Masukan nama" name="nama">
             </div>
         </div>
@@ -24,30 +25,97 @@
             </select>
         </div> -->
         <div class="row mb-3">
-            <label for="fakultas">Fakultas</label>
-            <select class="form-control" id="fakultas" name="fakultas">
-              {% for o in fakultas %}
-                      <option value="{{ o }}">{{ o }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="row mb-3">
-            <label for="prodi">Program Studi</label>
-            <select class="form-control" id="prodi" name="prodi">
-              {% for o in prodi %}
-                      <option value="{{ o }}">{{ o }}</option>
-              {% endfor %}
-            </select>
-          </div>
+            <div class="col-md-3">
+                <label for="fakultas">Fakultas</label>
+            </div>
+            <div class="col-md-5">
+                <select class="form-select" id="fakultas" name="fakultas">
+                {% for o in fakultas %}
+                    <option value="{{ o }}">{{ o }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label for="prodi">Program Studi</label>
+            </div>
+            <div class="col-md-5">
+                <select class="form-select" id="prodi" name="prodi">
+                    {% for o in prodi %}
+                            <option value="{{ o }}">{{ o }}</option>
+                    {% endfor %}
+                  </select>
+            </div>
+        </div>
 
-        <input type="text" name="x1" placeholder="x1" required="required" />
-        <input type="text" name="x2" placeholder="x2" required="required" />
-        <input type="text" name="x3" placeholder="x3" required="required" />
-        <input type="text" name="x4" placeholder="x4" required="required" />
-        <input type="text" name="x5" placeholder="x5" required="required" />
-        <button type="submit" id="submit">Predict</button>
+        <div class="row mb-3">
+            <div class="col">
+                <label>1. Berapa besar ketertarikan Anda untuk meluangkan waktu membaca/mempelajari 
+                    perkembangan teknologi yang diterapkan dalam dunia usaha?</label>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-1">
+                <input type="text" name="x1" placeholder="x1" required="required" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label>2. Berapa besar ketertarikan Anda untuk menerapkan teknologi terkini dalam usaha Anda?</label>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-1">
+                <input type="text" name="x2" placeholder="x2" required="required" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label>3. Berapa besar ketertarikan Anda untuk terlibat dalam kewirausahaan berbasis teknologi?</label>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-1">
+                <input type="text" name="x3" placeholder="x3" required="required" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label>4. Berapa besar ketertarikan Anda untuk dapat memberikan dampak luas dari penerapan bisnis 
+                    menggunakan teknologi?</label>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-1">
+                <input type="text" name="x4" placeholder="x4" required="required" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label>5. Jika suatu saat Anda memulai bisnis, berapa besar ketertarikan Anda untuk dapat menjalankan 
+                    bisnis berbasis teknologi?</label>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-1">
+                <input type="text" name="x5" placeholder="x5" required="required" />
+            </div>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <div class=".col-md-3 .offset-md-9">
+                <button type="submit" id="submit" class="btn btn-secondary btn-outline-dark">Simpan Data</button>
+            </div>
+        </div>
     </form>
     <br>
+</div>
+    
     <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript">

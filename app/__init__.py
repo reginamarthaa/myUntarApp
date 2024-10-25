@@ -1,5 +1,4 @@
 import os
-import pickle
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -7,7 +6,8 @@ from flask_login import LoginManager
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/3 REGINA/skripsi/UNTAR.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/3 REGINA/skripsi/UNTAR.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://regina:sa@02-05-0446-0223/UNTAR?driver=ODBC+Driver+17+for+SQL+Server'
 app.config['SECRET_KEY'] = '9f8b7d6e8a7d4b56a1c9d6b5e4f7d3a2'
 
 db = SQLAlchemy(app)
@@ -17,12 +17,12 @@ login_manager = LoginManager()
 login_manager.login_view = 'auth_route.login'
 login_manager.init_app(app)
 
-from .models import User
+from .models import Akun
 
 @login_manager.user_loader
 def load_user(user_id):
     # since the user_id is just the primary key of our user table, use it in the query for the user
-    return User.query.get(int(user_id))
+    return Akun.query.get(int(user_id))
 
 # db.init_app(app)
 
@@ -30,9 +30,14 @@ def load_user(user_id):
 from .routes_app.auth_route import auth_route
 from .routes_app.dashboard_route import dashboard_route
 from .routes_app.kuesioner_route import kuesioner_route
+from .routes_app.data_route import data_route
 app.register_blueprint(auth_route)
 app.register_blueprint(dashboard_route)
 app.register_blueprint(kuesioner_route)
+app.register_blueprint(data_route)
+
+
+
 
 # from flask import *
 # from flask_sqlalchemy import SQLAlchemy
