@@ -22,6 +22,8 @@ def getMahasiswadanProdiwithParam(nim = '', nama = '', fakultas = '', prodi = ''
     conn = pyodbc.connect(
         f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={'02-05-0446-0223'};DATABASE={'UNTAR'};UID={'regina'};PWD={'sa'}')
     cursor = conn.cursor()
-    cursor.execute("set nocount on; EXEC spGetMahasiswadDanProdi @NIM = ?, @NAMA = ?, @NAMA_FAKULTAS = ?, @NAMA_PROGRAM_STUDI = ?", (nim, nama, fakultas, prodi))
+    cursor.execute("set nocount on; EXEC spGetMahasiswaDanProdi @NIM = ?, @NAMA = ?, @NAMA_FAKULTAS = ?, @NAMA_PROGRAM_STUDI = ?", (nim, nama, fakultas, prodi))
     mahasiswa_all = cursor.fetchall()
+    cursor.close()
+    conn.close()
     return mahasiswa_all

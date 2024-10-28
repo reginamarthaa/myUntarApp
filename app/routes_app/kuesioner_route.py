@@ -32,10 +32,14 @@ def predict_post():
     selected_class = request.form.get('fakultas')
     selected_entry = request.form.get('prodi')
     nama = request.form.get('nama')
+    email = request.form.get('email')
     print(selected_class)
     print(selected_entry)
     print(nama)
 
+    prodi_id = kue_svc.getIdbyProdi(selected_entry)
+    nim = kue_svc.extract_numbers(email)
+    kue_svc.insertData(nim, nama, email, prodi_id, x1, x2, x3, x4, x5, prediction)
     return render_template('kuesioner.html', prediction_text='Predicted Species: {}'.format(prediction)) # Render the predicted result
 
 @kuesioner_route.route('/prodi', methods=['POST'])
