@@ -2,9 +2,6 @@
 
 {% block content %}
 <div class="container has-text-center">
-    <h1 class="title">
-        Welcome, {{ email }}
-    </h1>
     <div class="row">
         <div class="col-md-5">
             <label class="text-center">Hasil identifikasi intensi Mahasiswa Untar terhadap Technopreneurship</label>
@@ -17,11 +14,11 @@
         <div class="col-md-7">
             <h2>Pilih Pertanyaan:</h2>
         <select class="form-control" id="questionSelect" onchange="">
-            <option value="1">Pertanyaan 1</option>
-            <option value="2">Pertanyaan 2</option>
-            <option value="3">Pertanyaan 3</option>
-            <option value="4">Pertanyaan 4</option>
-            <option value="5">Pertanyaan 5</option>
+            <option value="PERTANYAAN_1">Pertanyaan 1</option>
+            <option value="PERTANYAAN_2">Pertanyaan 2</option>
+            <option value="PERTANYAAN_3">Pertanyaan 3</option>
+            <option value="PERTANYAAN_4">Pertanyaan 4</option>
+            <option value="PERTANYAAN_5">Pertanyaan 5</option>
         </select>
 
         <div id="chart_div" class="mt-4"></div>
@@ -29,13 +26,15 @@
     </div>
 </div>
 
-
+<script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript"> 
+<script> 
     google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawPieChart);
-      google.charts.setOnLoadCallback(drawLineChart);
-      function drawPieChart() {
+    google.charts.setOnLoadCallback(drawPieChart);
+    google.charts.setOnLoadCallback(drawLineChart);
+    function drawPieChart() {
         var data_hasil = google.visualization.arrayToDataTable([
             {% for key, value in data_hasil.items() %}
                 {% if value is string %}
@@ -47,46 +46,122 @@
         ]);
  
         var options = {
-          is3D: true,
-          //pieHole: 0.5
-          pieStartAngle: 100
-          /*slices: {  
-            2: {offset: 0.2},
-            3: {offset: 0.3}
-          }*/
-          /*slices: {
-            1: { color: 'transparent' }
-          }*/
+            is3D: true,
+            //pieHole: 0.5
+            pieStartAngle: 100
+            /*slices: {  
+                2: {offset: 0.2},
+                3: {offset: 0.3}
+            }*/
+            /*slices: {
+                1: { color: 'transparent' }
+            }*/
         };
  
         var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
         chart.draw(data_hasil, options);
-      }
+    }
 
-      function drawLineChart(dataArray) {
-            const data_pertanyaan = google.visualization.arrayToDataTable([
-                ['X', 'Value'],
-                ...dataArray.map((value, index) => [index + 1, value])
-            ]);
+    const options = {
+        title: 'Line Chart',
+        curveType: 'function',
+        hAxis: {
+            title: 'Label Sumbu X, Nilai'  // Label baru untuk sumbu x
+            // format: '#.##'
+            // minValue: 0,
+            // maxValue: 1
+        },
+        vAxis: {
+            title: 'Label Sumbu Y, Jumlah',   // Label baru untuk sumbu y
+            format: '#,##'
+            // minValue: 0
+        },
+        // legend: { position: 'bottom' }
+    };
+        
+    function drawLineChart(data1) {
+            
+            
 
-            const options = {
-                title: 'Line Chart',
-                curveType: 'function',
-                legend: { position: 'bottom' }
-            };
+            // const dataArray = data1.forEach(item => [item.Nilai, item.Jumlah]);
+    //         const dataArray = Object.entries(data1).map(([key, value]) => {
+    //     return [key, value];
+    // });
+            
+        // Prepare the data for Google Charts
+        // const data2 = google.visualization.arrayToDataTable([
+        //     ['Nilai', 'Jumlah'],
+        //     ...dataArray
+        // ]);
+        console.log(data1)
+        const dataArray = [];
+        Object.entries(data1).forEach(([Nilai, Jumlah]) => {
+                if (typeof value === 'string') {
+                    dataArray.push([Nilai, Jumlah]);
+                } else {
+                    dataArray.push([Nilai, Jumlah]);
+                }
+                
+            });
+        // var data2 = new google.visualization.arrayToDataTable(dataArray);
+        var data2 = new google.visualization.DataTable();
+        data2.addColumn('number', 'Nilai');
+        data2.addColumn('number', 'Jumlah');
+        data2.addRows(data1);
+        // for(var Nilai, Jumlah in data1){
+        //     data.addRow([Nilai, Jumlah]);
+        // }
 
-            const chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-            chart.draw(data_pertanyaan, options);
-        }
+        
 
-        function updateChart(questionId) {
-            fetch(`/get_data/${questionId}`)
-                .then(response => response.json())
-                .then(data_pertanyaan => drawChart(data_pertanyaan));
-        }
+        console.log(data2);
+        
 
-        window.onload = function() {
-            updateChart(1);  // Menampilkan chart untuk pertanyaan 1 saat pertama kali
-        };
+        const chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data2, options);
+    }
+
+        
+        // function updateChart(NO_PERTANYAAN) {
+        //     const user_url = "{{ url_for('dashboard_route.get_data', NO_PERTANYAAN=0) }}".replace('0', NO_PERTANYAAN);
+        //     fetch(user_url)
+        //         .then(response => response.json())
+        //         .then(data_pertanyaan => drawLineChart(data_pertanyaan));
+        // }
+
+    $(document).ready(function() {
+        $('#questionSelect').change(function() {
+            $.ajax({
+                url: '/get_data',
+                type: 'GET',
+                data: {
+                    NO_PERTANYAAN: $('#questionSelect').val()
+                },
+                success: function(data_pertanyaan_json) {
+                    // Proses data yang diterima di sini
+                    console.log(data_pertanyaan_json);
+                    const chartData = []; // Baris header
+                    data_pertanyaan_json.data_pertanyaan.forEach(item => {
+                        chartData.push([parseFloat(item.Nilai), item.Jumlah]); // Tambahkan data ke array
+                    });
+                    drawLineChart(chartData); 
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        });
+    });
+
+    var data_pertanyaan = {{ data_pertanyaan | tojson }};
+    window.onload = function() {
+        // console.log(data_pertanyaan)
+        
+        const chartData = []; // Baris header
+        data_pertanyaan.data.forEach(item => {
+                        chartData.push([parseFloat(item.Nilai), item.Jumlah]); // Tambahkan data ke array
+                    });
+        drawLineChart(chartData);  // Menampilkan chart untuk pertanyaan 1 saat pertama kali
+    };
 </script> 
 {% endblock %}

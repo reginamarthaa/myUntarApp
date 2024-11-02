@@ -23,12 +23,21 @@ def getHasilKuesioner():
     conn.close()
     return data
 
-def getDataKuesioner():
+def getDataKuesioner(no_pertanyaan):
     conn = pyodbc.connect(
         f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={'02-05-0446-0223'};DATABASE={'UNTAR'};UID={'regina'};PWD={'sa'}')
     cursor = conn.cursor()
-    cursor.execute("EXEC spGetDataKuesioner")
+    cursor.execute("EXEC spGetDataKuesioner @PERTANYAAN = ?", (no_pertanyaan))
     hasil = cursor.fetchall()
+
+    # if hasil:
+    #     data = {
+    #         'Hasil': 'Label'
+    #     }
+    #     data.update({float(result.Nilai): result.Jumlah for result in hasil})
+    # else:
+    #     data = {}
+    
     cursor.close()
     conn.close()
     return hasil
