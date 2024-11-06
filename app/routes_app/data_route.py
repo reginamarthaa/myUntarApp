@@ -1,10 +1,12 @@
 from flask import Blueprint, json, jsonify, render_template, request
+from flask_login import login_required
 from ..services import data_svc 
 
 data_route = Blueprint('data_route', __name__)
 rows_per_page = 10
 
 @data_route.route('/data_mahasiswa', methods=['GET'])
+@login_required
 def data_mahasiswa():
     page = request.args.get('page', 1, type=int)
     mahasiswa_all = data_svc.getMahasiswadanProdiwithParam()
@@ -27,6 +29,7 @@ def data_mahasiswa():
     return render_template('data.html', mahasiswa_all=paginated_data, pagination=pagination)
 
 @data_route.route('/data_mahasiswa', methods=['GET', 'POST'])
+@login_required
 def data_mahasiswa_get():
     nim = request.form.get('nim') 
     nama = request.form.get('nama') 

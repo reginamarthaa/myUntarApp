@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container text-center">
+<div class="container text-center pt-5">
     <div class="col-md-4 offset-md-4">
-        <div class="card p-4 bg-secondary">
+        <div class="card p-4 border-dark">
             <h3 class="text-center">Selamat Datang</h3>
           {% with messages = get_flashed_messages() %}
           {% if messages %}
@@ -14,11 +14,11 @@
           {% endwith %}
             <form method="POST" action="/login">
                 <div class="form-group my-2">
-                    <input class="form-control form-control-lg bg-secondary text-muted" type="email" name="email" placeholder="Email" autofocus="">
+                    <input class="form-control form-control-lg" type="email" name="email" placeholder="Email" autofocus="">
                 </div>
     
                 <div class="form-group my-2">
-                    <input class="form-control form-control-lg bg-secondary" type="password" name="password" placeholder="Password">
+                    <input class="form-control form-control-lg" type="password" name="password" placeholder="Password">
                 </div>
                 
                 <div class="form-group form-check my-2">
@@ -29,7 +29,7 @@
                     <label>Belum punya akun?</label>
                     <a href="{{ url_for('auth_route.signup') }}">Daftar disini</a>
                 </div>
-                <button class="btn btn-info btn-lg btn-block bg-white">Masuk</button>
+                <button class="btn btn-info btn-lg btn-block bg-secondary border-secondary">Masuk</button>
             </form>
         </div>
     </div>

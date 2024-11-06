@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container has-text-center">
+<div class="container has-text-center pt-4">
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-5 align-items-center">
             <label class="text-center">Hasil identifikasi intensi Mahasiswa Untar terhadap Technopreneurship</label>
             <!-- <img src="{{ chart_image }}" alt="Pie Chart"> -->
-            <div id="piechart_3d" style="width: 400px; height: 400px;"></div>
+            <div id="piechart_3d" style="width: 100%;"></div>
              <!-- <canvas id="myChart" width="400" height="400"> -->
 
              </canvas>
         </div>
         <div class="col-md-7">
-            <h2>Pilih Pertanyaan:</h2>
-        <select class="form-control" id="questionSelect" onchange="">
+            <label>Pilih Pertanyaan:</label>
+        <select class="form-select" id="questionSelect" onchange="">
             <option value="PERTANYAAN_1">Pertanyaan 1</option>
             <option value="PERTANYAAN_2">Pertanyaan 2</option>
             <option value="PERTANYAAN_3">Pertanyaan 3</option>
@@ -21,7 +21,7 @@
             <option value="PERTANYAAN_5">Pertanyaan 5</option>
         </select>
 
-        <div id="chart_div" class="mt-4"></div>
+        <div id="chart_div" class="mt-4" style="width: 100%;"></div>
         </div>
     </div>
 </div>
@@ -66,13 +66,13 @@
         title: 'Line Chart',
         curveType: 'function',
         hAxis: {
-            title: 'Label Sumbu X, Nilai'  // Label baru untuk sumbu x
+            title: 'Nilai'  // Label baru untuk sumbu x
             // format: '#.##'
             // minValue: 0,
             // maxValue: 1
         },
         vAxis: {
-            title: 'Label Sumbu Y, Jumlah',   // Label baru untuk sumbu y
+            title: 'Jumlah',   // Label baru untuk sumbu y
             format: '#,##'
             // minValue: 0
         },
@@ -93,16 +93,17 @@
         //     ['Nilai', 'Jumlah'],
         //     ...dataArray
         // ]);
-        console.log(data1)
-        const dataArray = [];
-        Object.entries(data1).forEach(([Nilai, Jumlah]) => {
-                if (typeof value === 'string') {
-                    dataArray.push([Nilai, Jumlah]);
-                } else {
-                    dataArray.push([Nilai, Jumlah]);
-                }
+
+        // console.log(data1)
+        // const dataArray = [];
+        // Object.entries(data1).forEach(([Nilai, Jumlah]) => {
+        //         if (typeof value === 'string') {
+        //             dataArray.push([Nilai, Jumlah]);
+        //         } else {
+        //             dataArray.push([Nilai, Jumlah]);
+        //         }
                 
-            });
+        //     });
         // var data2 = new google.visualization.arrayToDataTable(dataArray);
         var data2 = new google.visualization.DataTable();
         data2.addColumn('number', 'Nilai');
@@ -114,7 +115,7 @@
 
         
 
-        console.log(data2);
+        // console.log(data2);
         
 
         const chart = new google.visualization.LineChart(document.getElementById('chart_div'));
@@ -139,7 +140,8 @@
                 },
                 success: function(data_pertanyaan_json) {
                     // Proses data yang diterima di sini
-                    console.log(data_pertanyaan_json);
+
+                    // console.log(data_pertanyaan_json);
                     const chartData = []; // Baris header
                     data_pertanyaan_json.data_pertanyaan.forEach(item => {
                         chartData.push([parseFloat(item.Nilai), item.Jumlah]); // Tambahkan data ke array

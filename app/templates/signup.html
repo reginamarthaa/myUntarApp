@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container text-center">
+<div class="container text-center pt-5">
     <div class="col-md-4 offset-md-4">
-        <div class="card p-4">
+        <div class="card p-4 border-dark">
             <h3 class="text-center">Daftarkan Akun Anda</h3>
             {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -29,7 +29,7 @@
                     <a href="{{ url_for('auth_route.login') }}">Masuk disini</a>
                 </div>
     
-                <button class="btn btn-info btn-lg btn-block">Daftar</button>
+                <button class="btn btn-info btn-lg btn-block bg-secondary border-secondary">Daftar</button>
             </form>
         </div>
     </div>

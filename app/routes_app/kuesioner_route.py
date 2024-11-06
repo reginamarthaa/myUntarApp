@@ -1,5 +1,6 @@
 import pickle
 from flask import Blueprint, json, jsonify, render_template, request
+from flask_login import login_required
 import numpy as np
 from ..services import kuesioner_svc as kue_svc
 
@@ -7,6 +8,7 @@ from ..services import kuesioner_svc as kue_svc
 kuesioner_route = Blueprint('kuesioner_route', __name__)
 
 @kuesioner_route.route('/predict')
+@login_required
 def predict():
     class_entry_relations = kue_svc.getDDLValue()
 
@@ -18,6 +20,7 @@ def predict():
                        prodi=default_values)
 
 @kuesioner_route.route('/predict_input', methods=['POST', 'GET'])
+@login_required
 def predict_post():
     x1 = request.form.get('x1')
     x2 = request.form.get('x2')
@@ -40,15 +43,18 @@ def predict_post():
     prodi_id = kue_svc.getIdbyProdi(selected_entry)
     nim = kue_svc.extract_numbers(email)
     kue_svc.insertData(nim, nama, email, prodi_id, x1, x2, x3, x4, x5, prediction)
-    return render_template('kuesioner.html', prediction_text='Predicted Species: {}'.format(prediction)) # Render the predicted result
+    return render_template("/dashboard")
+    # return render_template('kuesioner.html', prediction_text='Predicted Species: {}'.format(prediction)) # Render the predicted result
 
 @kuesioner_route.route('/prodi', methods=['POST'])
+@login_required
 def get_prodi():
     fakultas = request.form['fakultas']
     prodii = kue_svc.getProdibyFakultas(fakultas)
     return json.dumps(prodii)
 
 @kuesioner_route.route('/_update_dropdown')
+@login_required
 def update_dropdown():
 
     # the value of the first dropdown (selected by the user)
@@ -65,6 +71,7 @@ def update_dropdown():
     return jsonify(html_string_selected=html_string_selected)
 
 @kuesioner_route.route('/_process_data')
+@login_required
 def process_data():
     selected_class = request.args.get('selected_class', type=str)
     selected_entry = request.args.get('selected_entry', type=str)

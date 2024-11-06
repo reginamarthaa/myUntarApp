@@ -9,6 +9,7 @@ dashboard_route = Blueprint('dashboard_route', __name__)
 
 @dashboard_route.route('/')
 def dashboard():
+    nama = getattr(current_user, 'nama', "")
     data_hasil = db_svc.getHasilKuesioner()
     # data_pertanyaan = db_svc.getDataKuesioner()
     data = db_svc.getDataKuesioner('PERTANYAAN_1')
@@ -25,7 +26,7 @@ def dashboard():
     }
     for Nilai, Jumlah in data:
         data_pertanyaan["data"].append({"Nilai": Nilai, "Jumlah": Jumlah})
-    return render_template('dashboard.html', data_hasil=data_hasil, data_pertanyaan=data_pertanyaan)
+    return render_template('dashboard.html', data_hasil=data_hasil, data_pertanyaan=data_pertanyaan, nama=nama)
 
 @dashboard_route.route('/get_data_pert/<string:NO_PERTANYAAN>')
 def get_data_pert(NO_PERTANYAAN):
