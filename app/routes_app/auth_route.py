@@ -45,7 +45,7 @@ def signup_post():
 
     user = Akun.query.filter_by(email=email).first()
     if user: # if a user is found, we want to redirect back to signup page so user can try again
-        flash('Email address already exists')
+        flash('Email sudah terdaftar')
         return redirect(url_for('auth_route.signup'))
     
      # create a new user with the form data. Hash the password so the plaintext version isn't saved.

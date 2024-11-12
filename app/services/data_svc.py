@@ -27,3 +27,21 @@ def getMahasiswadanProdiwithParam(nim = '', nama = '', fakultas = '', prodi = ''
     cursor.close()
     conn.close()
     return mahasiswa_all
+
+def deleteDataKuesionerMahasiswa(nim):
+    try:
+        conn = pyodbc.connect(
+            f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={'02-05-0446-0223'};DATABASE={'UNTAR'};UID={'regina'};PWD={'sa'}')
+        cursor = conn.cursor()
+        cursor.execute("EXEC spDeleteDataKuesionerMahasiswa @NIM = ?", (nim))
+        conn.commit()
+    except pyodbc.Error as e:
+        print("Database error:", e)
+        return e
+    except Exception as e:
+        print("Error:", e)
+        return e
+    finally:
+        # Pastikan koneksi selalu ditutup
+        conn.close()
+    return "Berhasil"

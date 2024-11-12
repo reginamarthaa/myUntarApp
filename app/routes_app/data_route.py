@@ -1,4 +1,4 @@
-from flask import Blueprint, json, jsonify, render_template, request
+from flask import Blueprint, json, jsonify, redirect, render_template, request, url_for
 from flask_login import login_required
 from ..services import data_svc 
 
@@ -55,3 +55,13 @@ def data_mahasiswa_get():
     # return render_template('data.html', mahasiswa_all=mahasiswa_all, nama=nama, nim=nim, fakultas=fakultas, prodi=prodi)
     return render_template('data.html', nama=nama, nim=nim, fakultas=fakultas, prodi=prodi,
                            mahasiswa_all=paginated_data, pagination=pagination)
+
+@data_route.route('/delete_mahasiswa', methods=['POST'])
+def delete_mahasiswa():
+    nim = request.form.get('nim')
+    result = data_svc.deleteDataKuesionerMahasiswa(nim)
+    if (result == 'Berhasil') :
+        return jsonify({"success": True}), 200
+    else :
+        return jsonify({"success": False}), 404
+    # return redirect(url_for('data_route.data_mahasiswa'))

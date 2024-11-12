@@ -19,6 +19,8 @@ def predict():
                        fakultas=default_classes,
                        prodi=default_values)
 
+from flask import jsonify
+
 @kuesioner_route.route('/predict_input', methods=['POST', 'GET'])
 @login_required
 def predict_post():
@@ -27,23 +29,36 @@ def predict_post():
     x3 = request.form.get('x3')
     x4 = request.form.get('x4')
     x5 = request.form.get('x5')
-    # init_features = [float(x) for x in request.form.values()]
     final_features = [np.array([x1, x2, x3, x4, x5])]
-    model = pickle.load(open('app\svm_model_poly.pkl', 'rb')) # Load the trained model
-    prediction = model.predict(final_features) # Make a prediction
 
+    # Load model dan prediksi
+    model = pickle.load(open('app/metode/svm_model_poly_1.pkl', 'rb'))
+    prediction = model.predict(final_features)
+
+    # Ambil data lainnya
     selected_class = request.form.get('fakultas')
     selected_entry = request.form.get('prodi')
     nama = request.form.get('nama')
     email = request.form.get('email')
-    print(selected_class)
-    print(selected_entry)
-    print(nama)
 
+    # Simpan data ke database
     prodi_id = kue_svc.getIdbyProdi(selected_entry)
     nim = kue_svc.extract_numbers(email)
     kue_svc.insertData(nim, nama, email, prodi_id, x1, x2, x3, x4, x5, prediction)
-    return render_template("/dashboard")
+
+    print(prediction[0])
+    if prediction[0] == 0 :
+        result = "Tertarik"
+    elif prediction[0] == 1 :
+        result = "Ragu-ragu"
+    elif prediction[0] == 2 :
+        result = "Tidak Tertarik"
+    else :
+        result = "Tidak termasuk ke dalam kelas manapun"    
+
+    # Kembalikan respons JSON dengan hasil klasifikasi
+    return jsonify({"success": True, "classification" : result, "nim" : nim}), 200
+
     # return render_template('kuesioner.html', prediction_text='Predicted Species: {}'.format(prediction)) # Render the predicted result
 
 @kuesioner_route.route('/prodi', methods=['POST'])

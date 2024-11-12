@@ -1,7 +1,10 @@
+import pickle
 from flask import Blueprint, jsonify, logging, render_template, request
 from flask_login import current_user, login_required
 import matplotlib.pyplot as plt
 import os
+
+import numpy as np
 from .. import current_directory
 from ..services import dashboard_svc as db_svc
 
@@ -13,13 +16,11 @@ def dashboard():
     data_hasil = db_svc.getHasilKuesioner()
     # data_pertanyaan = db_svc.getDataKuesioner()
     data = db_svc.getDataKuesioner('PERTANYAAN_1')
-    # if data:
-    #     data_pertanyaan = {
-    #         'Hasil': 'Label'
-    #     }
-    #     data_pertanyaan.update({float(result.Nilai): result.Jumlah for result in data})
-    # else:
-    #     data = {}
+    
+    # final_features = [np.array([0.7, 0.7, 0.7, 0.7, 0.7])]
+    # model = pickle.load(open('app\svm_model_poly.pkl', 'rb')) # Load the trained model
+    # prediction = model.predict(final_features)
+    # print(prediction)
     
     data_pertanyaan = {
         "data": []

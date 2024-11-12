@@ -5,36 +5,37 @@
     <form action="/data_mahasiswa" method="post" class="pt-4">
         <!-- nama -->
         <div class="row mb-3">
+            <div class="col-md-1 d-flex align-items-center justify-content-start">
+                <label class="form-label">NIM</label>
+            </div>
+            <div class="col-md-5 d-flex align-items-center">
+                <input type="text" class="form-control border-2" id="nim" name="nim" value="{{ nim }}">
+            </div>
             <div class="col-md-2">
-                <label for="exampleInput" class="form-label">NIM</label>
+                <label class="form-label">Fakultas</label>
             </div>
             <div class="col-md-4">
-                <input type="text" class="form-control" id="nim" name="nim" value="{{ nim }}">
-            </div>
-            <div class="col-md-2">
-                <label for="exampleInput" class="form-label">Fakultas</label>
-            </div>
-            <div class="col-md-4">
-                <input type="text" class="form-control" id="fakultas" name="fakultas" value="{{ fakultas }}">
+                <input type="text" class="form-control border-2" id="fakultas" name="fakultas" value="{{ fakultas }}">
             </div>
         </div>
         <div class="row mb-3">
+            <div class="col-md-1">
+                <label class="form-label">Nama</label>
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control border-2" id="nama" name="nama" value="{{ nama }}">
+            </div>
             <div class="col-md-2">
-                <label for="exampleInput" class="form-label">Nama</label>
+                <label class="form-label">Program Studi</label>
             </div>
             <div class="col-md-4">
-                <input type="text" class="form-control" id="nama" name="nama" value="{{ nama }}">
-            </div>
-            <div class="col-md-2">
-                <label for="exampleInput" class="form-label">Program Studi</label>
-            </div>
-            <div class="col-md-4">
-                <input type="text" class="form-control" id="prodi" name="prodi" value="{{ prodi }}">
+                <input type="text" class="form-control border-2" id="prodi" name="prodi" value="{{ prodi }}">
+
             </div>
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
             <div class=".col-md-3 .offset-md-9">
-                <button type="submit" id="submit" class="btn btn-info btn-lg btn-block bg-secondary border-secondary">Cari Data</button>
+                <button type="submit" id="submit" class="btn btn-info btn-block" style="color: white;background-color: #332C5E;border-color: #332C5E;">Cari Data</button>
             </div>
         </div>
     </form>
@@ -56,7 +57,10 @@
                 <td>{{ mahasiswa.NIM }}</td>
                 <td>{{ mahasiswa.NAMA_FAKULTAS }}</td>
                 <td>{{ mahasiswa.NAMA_PROGRAM_STUDI }}</td>
-                <td>gambar</td>
+                <td><i class="bi bi-trash delete-icon" style="cursor: pointer; color: red;"
+                    data-nim="{{ mahasiswa.NIM }}" onclick="deleteMahasiswa('{{ mahasiswa.NIM }}')"></i>
+                 Hapus
+                </td>
             </tr>
             {% endfor %}
         </tbody>
@@ -138,6 +142,35 @@
 
             // Initial display
             displayData(currentPage);
+
+            function deleteMahasiswa(nim) {
+                if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                    fetch('/delete_mahasiswa', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: `nim=${nim}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Hapus baris dari tabel jika berhasil
+                            const row = document.getElementById(`row-${nim}`);
+                            // row.remove();
+                            alert('Data berhasil dihapus');
+                            window.location.href = '/data_mahasiswa';
+                        } else {
+                            alert('Data tidak ditemukan atau gagal dihapus');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan pada server');
+                    });
+                }
+            }
+
         </script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>    

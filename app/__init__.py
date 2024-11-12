@@ -3,6 +3,7 @@ from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+# from app import routes, models, errors
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__)
@@ -31,11 +32,12 @@ from .routes_app.auth_route import auth_route
 from .routes_app.dashboard_route import dashboard_route
 from .routes_app.kuesioner_route import kuesioner_route
 from .routes_app.data_route import data_route
+# from .routes_app.error_route import app_route
 app.register_blueprint(auth_route)
 app.register_blueprint(dashboard_route)
 app.register_blueprint(kuesioner_route)
 app.register_blueprint(data_route)
-
+# app.register_blueprint(app_route)
 
 
 

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Halaman yang Anda cari tidak ditemukan</h1>
+    <p><a href="{{ url_for('dashboard_route.dashboard') }}">Kemabli ke Dashboard</a></p>
+    
+    {% if error %}
+        <p><strong>Detail:</strong> {{ error_message }}</p>
+    {% endif %}
+{% endblock %}

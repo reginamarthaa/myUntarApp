@@ -1,28 +1,51 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container has-text-center pt-4">
-    <div class="row">
-        <div class="col-md-5 align-items-center">
-            <label class="text-center">Hasil identifikasi intensi Mahasiswa Untar terhadap Technopreneurship</label>
+<div class="container has-text-center p-4">
+    <div class="row my-1">
+        <div class="col-4 mx-1 p-3 align-items-center" style="background-color: #e6e0e0; border-radius: 10px;">
+            <label class="text-center mb-3">Hasil identifikasi intensi Mahasiswa Untar terhadap Technopreneurship</label>
             <!-- <img src="{{ chart_image }}" alt="Pie Chart"> -->
-            <div id="piechart_3d" style="width: 100%;"></div>
+            <div id="piechart_3d" ></div>
              <!-- <canvas id="myChart" width="400" height="400"> -->
 
-             </canvas>
+             <!-- </canvas> -->
         </div>
-        <div class="col-md-7">
-            <label>Pilih Pertanyaan:</label>
-        <select class="form-select" id="questionSelect" onchange="">
-            <option value="PERTANYAAN_1">Pertanyaan 1</option>
-            <option value="PERTANYAAN_2">Pertanyaan 2</option>
-            <option value="PERTANYAAN_3">Pertanyaan 3</option>
-            <option value="PERTANYAAN_4">Pertanyaan 4</option>
-            <option value="PERTANYAAN_5">Pertanyaan 5</option>
-        </select>
-
-        <div id="chart_div" class="mt-4" style="width: 100%;"></div>
+        <div class="col mx-1" style="background-color: #e6e0e0;border-radius: 10px;">
+            <div class="row align-items-center">
+                <div class="col-auto">  
+                    <label for="questionSelect">Pilih Pertanyaan untuk ditampilkan </label>
+                </div>
+                <div class="col">
+                    <select onchange="checkQuestion()" class="form-select my-3" id="questionSelect" style="background-color: #f9f6f6ba;">
+                        <option value="PERTANYAAN_1">Pertanyaan 1</option>
+                        <option value="PERTANYAAN_2">Pertanyaan 2</option>
+                        <option value="PERTANYAAN_3">Pertanyaan 3</option>
+                        <option value="PERTANYAAN_4">Pertanyaan 4</option>
+                        <option value="PERTANYAAN_5">Pertanyaan 5</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row pr-5" id="detail_pertanyaan">
+            </div>
+            <div id="chart_div" class="mt-4" style="">
+                
+            </div>
         </div>
+    </div>
+    <div class="row my-1">
+        <!-- <div class="col-3 mx-1 p-3 align-items-center" style="background-color: #e6e0e0; border-radius: 10px;">
+            test
+        </div>
+        <div class="col-3 mx-1 p-3 align-items-center" style="background-color: #e6e0e0; border-radius: 10px;">
+            test2
+        </div>
+        <div class="col-3 mx-1 p-3 align-items-center" style="background-color: #e6e0e0; border-radius: 10px;">
+            test3
+        </div>
+        <div class="col-2 mx-1 p-3 align-items-center" style="background-color: #e6e0e0; border-radius: 10px;">
+            test4
+        </div> -->
     </div>
 </div>
 
@@ -47,8 +70,20 @@
  
         var options = {
             is3D: true,
+            fontName : 'Montserrat',
             //pieHole: 0.5
-            pieStartAngle: 100
+            pieStartAngle: 100,
+            backgroundColor : '#e6e0e0',
+            pieSliceTextStyle: {
+                color: 'black'          
+            },
+            slices: {
+                0: { color: '#FA577A' }, // Menyesuaikan warna dan offset dari tiap slice
+                1: { color: '#E53154' },
+                2: { color: '#CE0E31' }
+                // 3: { color: '#2196F3' },
+                // 4: { color: '#9C27B0' }
+            },
             /*slices: {  
                 2: {offset: 0.2},
                 3: {offset: 0.3}
@@ -63,20 +98,70 @@
     }
 
     const options = {
-        title: 'Line Chart',
-        curveType: 'function',
+        fontName : 'Montserrat',
+        curveType: 'function', // Membuat garis menjadi kurva halus
+        backgroundColor: '#e6e0e0', // Warna latar belakang chart
+        colors: ['#2B214D'], // Warna garis (jika lebih dari satu dataset)
         hAxis: {
-            title: 'Nilai'  // Label baru untuk sumbu x
-            // format: '#.##'
-            // minValue: 0,
-            // maxValue: 1
+            title: 'Nilai',
+            // format: '#,##',
+            titleTextStyle: {
+                color: '#333',
+                fontSize: 16,
+                italic: true
+            },
+            textStyle: {
+                color: '#333',
+                fontSize: 12
+            },
+            gridlines: {
+                color: '#ffffff'  // Warna gridline horizontal
+            },
+            viewWindow: {
+                min: 0,
+                max: 1
+            }
         },
         vAxis: {
-            title: 'Jumlah',   // Label baru untuk sumbu y
-            format: '#,##'
-            // minValue: 0
+            title: 'Jumlah',
+            titleTextStyle: {
+                color: '#333',
+                fontSize: 16,
+                italic: true
+            },
+            textStyle: {
+                color: '#333',
+                fontSize: 12
+            },
+            format: '#,##',
+            gridlines: {
+                color: '#332C5E' // Warna gridline vertikal
+            }
         },
-        // legend: { position: 'bottom' }
+        pointSize: 3,  // Ukuran titik data pada garis
+        lineWidth: 2,  // Ketebalan garis
+        tooltip: {
+            textStyle: {
+                color: '#333',
+                fontSize: 12
+            },
+            showColorCode: true, // Menampilkan kode warna pada tooltip
+        },
+        animation: {
+            startup: true,       // Animasi saat chart pertama kali dimuat
+            duration: 1000,      // Durasi animasi dalam milidetik
+            easing: 'out'        // Jenis animasi
+        }
+        // title: 'Line Chart',
+        // curveType: 'function',
+        // backgroundColor : '#ffb6c5',
+        // hAxis: {
+        //     title: 'Nilai'
+        // },
+        // vAxis: {
+        //     title: 'Jumlah',
+        //     format: '#,##'
+        // }
     };
         
     function drawLineChart(data1) {
@@ -146,6 +231,7 @@
                     data_pertanyaan_json.data_pertanyaan.forEach(item => {
                         chartData.push([parseFloat(item.Nilai), item.Jumlah]); // Tambahkan data ke array
                     });
+                    checkQuestion();
                     drawLineChart(chartData); 
                 },
                 error: function(xhr, status, error) {
@@ -165,5 +251,25 @@
                     });
         drawLineChart(chartData);  // Menampilkan chart untuk pertanyaan 1 saat pertama kali
     };
+
+    function checkQuestion() {
+        const questionSelect = document.getElementById("questionSelect").value;
+        const messageDiv = document.getElementById("detail_pertanyaan");
+
+        if (questionSelect === "PERTANYAAN_1") {
+            messageDiv.innerHTML = "<p>Berapa besar ketertarikan Anda untuk meluangkan waktu membaca/mempelajari perkembangan teknologi yang diterapkan dalam dunia usaha?</p>";
+        } else if (questionSelect === "PERTANYAAN_2") {
+            messageDiv.innerHTML = "<p>Berapa besar ketertarikan Anda untuk menerapkan teknologi terkini dalam usaha Anda?</p>";
+        } else if (questionSelect === "PERTANYAAN_3") {
+            messageDiv.innerHTML = "<p>Berapa besar ketertarikan Anda untuk terlibat dalam kewirausahaan berbasis teknologi?</p>";
+        }else if (questionSelect === "PERTANYAAN_4") {
+            messageDiv.innerHTML = "<p>Berapa besar ketertarikan Anda untuk dapat memberikan dampak luas dari penerapan bisnis menggunakan teknologi?</p>";
+        }else if (questionSelect === "PERTANYAAN_5") {
+            messageDiv.innerHTML = "<p>Jika suatu saat Anda memulai bisnis, berapa besar ketertarikan Anda untuk dapat menjalankan bisnis berbasis teknologi?</p>";
+        }
+        else {
+            messageDiv.innerHTML = ""; // Kosongkan jika bukan "PERTANYAAN_5"
+        }
+    }
 </script> 
 {% endblock %}

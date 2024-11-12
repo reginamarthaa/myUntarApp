@@ -1,0 +1,35 @@
+
+/* Import font dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Atur font global untuk seluruh aplikasi */
+body {
+    font-family: 'Montserrat';
+}
+
+p {
+    font-style: italic;
+    font-size: small;
+    margin-right: 2px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.font-bold{
+    font-weight: 700;
+}
+.nav-link.active {
+    color: white;
+    background-color: #332C5E !important;
+}
+.nav-link:hover {
+    color: #f8f9fa;
+    background-color: #332c5e63;
+}
+.nav-link {
+    color: #f8f9fa;
+}
+.navbar {
+    color: #E53154;
+    background-color: #E53154;
+}
