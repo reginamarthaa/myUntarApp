@@ -3,10 +3,10 @@ import re
 import sqlite3 as sql
 import pyodbc
 from flask import jsonify
+from .. import connection_string
 
 def getHasilKuesioner():
-    conn = pyodbc.connect(
-        f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={'02-05-0446-0223'};DATABASE={'UNTAR'};UID={'regina'};PWD={'sa'}')
+    conn = pyodbc.connect(connection_string)
     cursor = conn.cursor()
     cursor.execute("EXEC spGetHasilKuesioner")
     hasil = cursor.fetchall()
@@ -24,8 +24,7 @@ def getHasilKuesioner():
     return data
 
 def getDataKuesioner(no_pertanyaan):
-    conn = pyodbc.connect(
-        f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={'02-05-0446-0223'};DATABASE={'UNTAR'};UID={'regina'};PWD={'sa'}')
+    conn = pyodbc.connect(connection_string)
     cursor = conn.cursor()
     cursor.execute("EXEC spGetDataKuesioner @PERTANYAAN = ?", (no_pertanyaan))
     hasil = cursor.fetchall()

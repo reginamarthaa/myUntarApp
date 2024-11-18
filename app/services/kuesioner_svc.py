@@ -3,6 +3,7 @@ import re
 import sqlite3 as sql
 import pyodbc
 from flask import jsonify
+from .. import connection_string
 
 from ..models import ProgramStudi
 
@@ -52,13 +53,7 @@ def insertData(nim, nama, email, program_studi_id, x1, x2, x3, x4, x5, hasil):
     # conn.close()
     try:
         # Membuat koneksi ke database
-        conn = pyodbc.connect(
-            'DRIVER={ODBC Driver 17 for SQL Server};'
-            'SERVER=02-05-0446-0223;'
-            'DATABASE=UNTAR;'
-            'UID=regina;'
-            'PWD=sa'
-        )
+        conn = pyodbc.connect(connection_string)
         # x1 = final_features[0][0]
         # x2 = final_features[0][1]
         # x3 = final_features[0][2]

@@ -39,7 +39,13 @@ app.register_blueprint(kuesioner_route)
 app.register_blueprint(data_route)
 app.register_blueprint(algoritma_route)
 
-
+connection_string = (
+            "DRIVER={ODBC Driver 17 for SQL Server};"
+            "SERVER=114.10.42.43,1433;"
+            "DATABASE=UNTAR;"
+            "UID=regina;"
+            "PWD=sa;"
+        )
 
 # from flask import *
 # from flask_sqlalchemy import SQLAlchemy
