@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container has-text-center p-4">
+    <div class="row my-1">
+        <div class="col-md-8 mx-auto p-3 rounded text-center" style="background-color: #332c5e63;">
+            <h1>Upload File CSV</h1>
+            <form action="/algoritma_pelatihan" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".csv">
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+        <div class="col-md-3 mx-auto p-3 rounded text-center" style="background-color: #e6e0e0;">
+            <h1 class="h5 text-dark mb-3">Unduh template file yang akan diunggah</h1>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <button type="submit" class="btn" style="background-color: #332C5E;color: #f8f9fa">Unduh</button>
+            </form>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

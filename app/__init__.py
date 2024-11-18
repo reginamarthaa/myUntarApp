@@ -32,12 +32,12 @@ from .routes_app.auth_route import auth_route
 from .routes_app.dashboard_route import dashboard_route
 from .routes_app.kuesioner_route import kuesioner_route
 from .routes_app.data_route import data_route
-# from .routes_app.error_route import app_route
+from .routes_app.algoritma_route import algoritma_route
 app.register_blueprint(auth_route)
 app.register_blueprint(dashboard_route)
 app.register_blueprint(kuesioner_route)
 app.register_blueprint(data_route)
-# app.register_blueprint(app_route)
+app.register_blueprint(algoritma_route)
 
 
 

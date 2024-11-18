@@ -28,6 +28,9 @@
                     <li class="nav-item">
                     <a class="ms-2 nav-link {% if request.path == '/predict' %}active{% endif %}" href="{{ url_for('kuesioner_route.predict') }}">Kuesioner</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="ms-2 nav-link {% if request.path == '/algoritma' %}active{% endif %}" href="{{ url_for('algoritma_route.algoritma') }}">Algoritma</a>
+                    </li>
                 </ul>
                 <ul class="nav nav-pills navbar-right">
                     {% if current_user.is_authenticated %}
