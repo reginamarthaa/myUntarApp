@@ -14,8 +14,8 @@ Proyek ini adalah sebuah aplikasi berbasis web yang dibangun menggunakan Flask s
 
 ### 1. Clone Repository
 ```bash
-git clone <URL-REPO-GITHUB>
-cd <NAMA-PROYEK>
+git clone https://github.com/reginamarthaa/myUntarApp
+cd myUntarApp
 ```
 
 ### 2. Buat dan Aktifkan Virtual Environment (Opsional)
@@ -46,7 +46,7 @@ DB_PORT=1433
 ### 5. Menjalankan Aplikasi
 Jalankan server Flask menggunakan perintah berikut:
 ```bash
-flask run
+flask run.py
 ```
 Aplikasi akan berjalan di [http://localhost:5000](http://localhost:5000).
 
