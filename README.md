@@ -52,6 +52,13 @@ Aplikasi akan berjalan di [http://localhost:5000](http://localhost:5000).
 
 ## Script SQL
 Jalankan script SQL yang terdapat pada folder script dengan urutan sebagai berikut:
+1 Script Table.sql
+2 Script spInsertDataKuesionerMahasiswa.sql
+3 Script spInsertDataMahasiswa.sql
+4 Scipt spGetMahasiswaDanProdi.sql
+5 spGetDataKuesioner.sql
+6 Script spGetHasilKuesioner.sql
+7 Script spDeleteDataKuesionerMahasiswa.sql
 
 ---
 
